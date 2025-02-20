@@ -28,23 +28,24 @@ Step-by-Step Setup
 	1. Clone the Repository
 
 bash
-CopyEdit
 git clone <repository_link>
 cd medical_text_summarizer
+
 	2. Configure Environment Variables Create .env in backend directory:
 
 ini
-CopyEdit
 LLM_API_KEY=your_openai_api_key
 REDIS_URL=redis://redis:6379/0
+
 	3. Start the Application with Docker
 
 bash
-CopyEdit
+
 docker-compose build
 docker-compose up
+
 	4. Access the Application
-	• Frontend: http://localhost:3000
-	• Backend API Docs: http://localhost:8000/docs
-![image](https://github.com/user-attachments/assets/4483be43-0513-4f42-8a98-78ea760be7bb)
+		• Frontend: http://localhost:3000
+		• Backend API Docs: http://localhost:8000/docs
+
 
