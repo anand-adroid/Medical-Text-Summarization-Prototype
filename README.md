@@ -43,26 +43,25 @@ This application provides **fast, accurate, and structured summaries** of clinic
 #### 1. Clone the Repository
 ```sh
 git clone https://github.com/anand-adroid/Medical-Text-Summarization-Prototype.git
-cd Medical-Text-Summarization-Prototype
-
-
-	2. Configure Environment Variables Create .env in backend directory:
+cd Medical-Text-Summarization-Prototype 
+```
+#### 2. Configure Environment Variables Create .env in backend directory:
 
 ```
 LLM_API_KEY=your_openai_api_key
 REDIS_URL=redis://redis:6379/0
-```
 
-	3. Start the Application with Docker
+```
+#### 3. Start the Application with Docker
+
 ```
 docker-compose build
 docker-compose up
 ```
 
-	4. Access the Application
- 		• Frontend: 
-   			http://localhost:3000
-		• Backend API Docs: 
-  			http://localhost:8000/docs
+#### 4. Access the Application  
+- **Frontend**: <a href="http://localhost:3000" target="_blank">http://localhost:3000</a>  
+- **Backend API Docs**: <a href="http://localhost:8000/docs" target="_blank">http://localhost:8000/docs</a>
 
 
+	
