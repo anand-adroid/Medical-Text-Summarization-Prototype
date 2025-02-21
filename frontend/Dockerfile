@@ -5,7 +5,7 @@ WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm install --production
 
-COPY . .
+COPY ./frontend /app/frontend
 
 EXPOSE 3000
 
