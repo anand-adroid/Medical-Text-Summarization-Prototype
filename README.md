@@ -66,6 +66,8 @@ docker-compose up
 
 #### 5. Architecture Overview
 
+![Architecture Diagram](https://github.com/anand-adroid/Medical-Text-Summarization-Prototype/blob/564842a48fa954acd3dbb57c2be70744ba4ded4a/Architecture.png)
+
 ### **System Components**
 - **Frontend (React)**: Sends clinical notes to the FastAPI backend for processing.
 - **FastAPI Backend**: Handles requests, processes clinical notes, generates summaries, and evaluates them.
