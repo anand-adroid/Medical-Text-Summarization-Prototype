@@ -1,0 +1,26 @@
+# Ignore Python cache files
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache
+
+# Ignore OS-specific files
+.DS_Store
+
+# Ignore Virtual Environment
+venv/
+.env
+
+# Ignore Git repository
+.git/
+
+# Ignore clinical notes data but keep folder
+clinical_notes/*
+!clinical_notes/.gitkeep
+
+# Ignore logs
+logs/
+llm_usage.log
+
+frontend/node_modules/
+frontend/build/

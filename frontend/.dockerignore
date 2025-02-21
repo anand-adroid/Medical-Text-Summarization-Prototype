@@ -1,0 +1,12 @@
+# Ignore OS-specific files
+.DS_Store
+
+# Ignore node_modules (this is important for frontend)
+node_modules/
+
+# Ignore Git repository
+.git/
+
+*.log
+.cache/
+.env

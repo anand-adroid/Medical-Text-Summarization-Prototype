@@ -1,0 +1,19 @@
+# Ignore Python cache files
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache
+
+# Ignore OS-specific files
+.DS_Store
+
+# Ignore Virtual Environment
+venv/
+.env
+
+# Ignore Git repository
+.git/
+
+
+clinical_notes/*
+!clinical_notes/.gitkeep
