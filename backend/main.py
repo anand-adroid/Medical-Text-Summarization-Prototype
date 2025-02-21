@@ -81,7 +81,7 @@ def health_check():
     return cors_json_response({"status": "API running"})
 
 @app.post("/summarize")
-def summarize(request: SummarizeRequest):
+async def summarize(request: SummarizeRequest):
     try:
         """Generate a clinical note summary with caching, evaluation, and logging."""
         start_time = time.time()
@@ -93,14 +93,15 @@ def summarize(request: SummarizeRequest):
             return cors_json_response(cached)
 
         # Generate Summary
-        result = generate_summary(request.notes, request.role)
+        result = await generate_summary(request.notes, request.role)
         end_time = time.time()
         result["response_time"] = round(end_time - start_time, 2)
         log_request(request.notes, result["summary"], result["input_tokens"], result["output_tokens"], result["duration"])
 
         return cors_json_response(result)
     except SummarizationError as e:
-        logging.error(f"Summarization failed: {e}")
+        
+        logger.error(f"Summarization failed: {e}")
         return cors_json_response({"detail": str(e)}, status_code=500)
 
 @app.get("/feedback")

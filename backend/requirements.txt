@@ -4,10 +4,10 @@ uvicorn[standard]==0.27.1
 python-dotenv==1.0.1
 
 # OpenAI LLM API
-openai==1.10.0
+openai==1.63.2
 
 # Evaluation & Metrics
-deepeval==0.20.4
+deepeval==2.4.1
 
 # Redis for caching summaries
 redis==5.0.1

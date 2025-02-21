@@ -7,6 +7,7 @@ from backend.config import LLM_API_KEY, LLM_MODEL, CACHE_TTL
 from backend.evaluator import evaluate_summary_deepeval
 from tenacity import retry, stop_after_attempt, wait_exponential, retry_if_exception_type
 import redis
+import os
 
 class SummarizationError(Exception):
     pass
@@ -36,7 +37,11 @@ ROLE_PROMPTS = {
     "nurse": "Provide a simplified summary focusing on patient care needs."
 }
 
-r = redis.Redis(host='localhost', port=6379, db=0)
+if os.getenv("DOCKER_ENV"):  
+    redis_url = os.getenv("DOCKER_REDIS_URL", "redis://redis:6379/0")
+else: 
+    redis_url = os.getenv("REDIS_URL", "redis://127.0.0.1:6379/0") 
+r = redis.Redis.from_url(redis_url)
 
 def get_cached_summary(notes, role):
     key = f"{role}:{hash(notes)}"
@@ -134,7 +139,7 @@ def call_llm(prompt, temperature=0.4, num_variants=2):
 
     return output_variants
 
-def generate_summary(notes, role="general"):
+async def generate_summary(notes, role="general"):
 
     cached = get_cached_summary(notes, role)
     if cached:
@@ -209,7 +214,7 @@ def generate_summary(notes, role="general"):
         raise SummarizationError("Malformed response from LLM!")
         
     
-    evaluation_results = evaluate_summary_deepeval(notes, summary_variants)
+    evaluation_results = await evaluate_summary_deepeval(notes, summary_variants)
 
    
     if not isinstance(evaluation_results, list):

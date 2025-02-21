@@ -8,6 +8,8 @@ from scipy.spatial.distance import cosine
 from backend.config import LLM_MODEL, LLM_API_KEY
 from langchain_openai import OpenAIEmbeddings
 import openai
+import asyncio
+import sys
 from loguru import logger
 
 logger.add("backend/logs/evaluator.log", rotation="1 MB", level="INFO", format="{time} | {level} | {message}")
@@ -58,8 +60,24 @@ medical_vagueness_metric = GEval(
     verbose_mode=True
 )
 
+#def is_uvloop():
+#    return isinstance(asyncio.get_event_loop(), asyncio.AbstractEventLoop) and 'uvloop' in sys.modules
+
+async def generate_truths(prompt):
+    try:
+        response = await openai_client.chat.completions.create(
+            model=LLM_MODEL,
+            messages=[{"role":"user", "content":prompt}],
+            temperature=0.4
+        )
+        return response.choices[0].message.content.strip()
+    except Exception as e:
+        logger.error(f"OpenAI API Error: {e}")
+        return "Error generating truths."
+
+
 # DeepEval-Based Evaluation
-def evaluate_summary_deepeval(input_notes, summaries):
+async def evaluate_summary_deepeval(input_notes, summaries):
     logger.info("Starting evaluation of summaries...")
 
     if isinstance(summaries, dict):  
@@ -81,15 +99,28 @@ def evaluate_summary_deepeval(input_notes, summaries):
         truths_extraction_limit=50
     )
 
-    eval_results = evaluate(
-        test_cases,
-        [summarization_metric, medical_redundancy_metric, medical_vagueness_metric]
-    )
+    try:
+        eval_results = evaluate(
+            test_cases,
+            [summarization_metric, medical_redundancy_metric, medical_vagueness_metric]
+        )
+    except AttributeError as e:
+        logger.error(f"DeepEval Error: {e}. Using manual truth generation.")
+        truth_data = await generate_truths(input_notes)
+        summarization_metric.truths = [truth_data]
+        eval_results = evaluate(
+            test_cases,
+            [summarization_metric, medical_redundancy_metric, medical_vagueness_metric]
+        )
 
     formatted_results = []
 
     for i, result in enumerate(eval_results.test_results):  
-        metrics_data = result.metrics_data 
+        try:
+            metrics_data = result.metrics_data 
+        except AttributeError:
+            logger.error(f"ERROR: Test result does not contain expected `metrics_data` field: {result}")
+            continue 
 
         summarization_score = metrics_data[0].score  # Measures alignment & factual accuracy to prevent hallucinations
         redundancy_score = metrics_data[1].score  # To improve summary efficiency
