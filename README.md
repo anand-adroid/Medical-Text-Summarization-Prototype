@@ -36,6 +36,7 @@ This application provides **fast, accurate, and structured summaries** of clinic
 ### Prerequisites
 
 - Docker & Docker Compose installed.
+- Redis Installed
 - OpenAI API key (set in `.env` file).
 
 ### Step-by-Step Setup
@@ -62,6 +63,17 @@ docker-compose up
 #### 4. Access the Application  
 - **Frontend**: <a href="http://localhost:3000" target="_blank">http://localhost:3000</a>  
 - **Backend API Docs**: <a href="http://localhost:8000/docs" target="_blank">http://localhost:8000/docs</a>
+
+#### 5. Architecture Overview
+
+### **System Components**
+- **Frontend (React)**: Sends clinical notes to the FastAPI backend for processing.
+- **FastAPI Backend**: Handles requests, processes clinical notes, generates summaries, and evaluates them.
+- **OpenAI API (Summarizer)**: The core summarization engine that generates structured summaries using optimized API calls.
+- **DeepEval (Evaluation)**: Evaluates summaries for **accuracy, coherence, and entity density** to ensure high-quality output.
+- **Redis (Caching)**: Stores previously generated summaries to improve efficiency and reduce API calls.
+
+
 
 
 	
