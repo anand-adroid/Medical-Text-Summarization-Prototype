@@ -1,51 +1,50 @@
 # Medical-Text-Summarization-Prototype
-** Overview **
- 
-This application provides fast, accurate, and structured summaries of clinical notes using state-of-the-art LLM models. It supports role-specific summaries for cardiologists, oncologists, nurses, and general use, highlighting critical findings to enhance clinical efficiency.
 
-**Features**
+## Overview
 
-	•  Role-Based Summarization: 
- 		Tailored summaries for different clinical roles.
-	•  Highlight Critical Findings: 
- 		Automatically tags critical medical issues.
-	•  Efficient Caching: 
- 		Utilizes Redis to cache summaries and reduce costs.
-	•  Robust Error Handling:
- 		Comprehensive logging and error detection.
-	•  Innovative LLM Evaluation: 
- 		Uses DeepEval with custom metrics.
+This application provides **fast, accurate, and structured summaries** of clinical notes using state-of-the-art **LLM models**. It supports **role-specific summaries** for cardiologists, oncologists, nurses, and general use, highlighting **critical findings** to enhance clinical efficiency.
 
-**Tech Stack**
+## Features
 
-*Backend*
+- **Role-Based Summarization**  
+  Tailored summaries for different clinical roles.
+- **Highlight Critical Findings**  
+  Automatically tags critical medical issues.
+- **Efficient Caching**  
+  Utilizes **Redis** to cache summaries and reduce costs.
+- **Robust Error Handling**  
+  Comprehensive logging and error detection.
+- **Innovative LLM Evaluation**  
+  Uses **DeepEval** with custom metrics.
 
-	• FastAPI
-	• OpenAI API (for LLM-based summarization)
-	• Redis (caching layer)
-	• Loguru (enhanced logging)
-	• Docker & Docker Compose (containerization)
- 
-*Frontend*
+## Tech Stack
 
-	• React.js
-	• Axios (HTTP requests)
-	• Tailwind CSS
+### Backend
+- FastAPI
+- OpenAI API (for LLM-based summarization)
+- Redis (caching layer)
+- Loguru (enhanced logging)
+- Docker & Docker Compose (containerization)
 
-**Setup Instructions**
+### Frontend
+- React.js
+- Axios (HTTP requests)
+- Tailwind CSS
 
-*Prerequisites*
+## Setup Instructions
 
-	• Docker & Docker Compose installed.
-	• OpenAI API key (set in .env file).
- 
-**Step-by-Step Setup**
+### Prerequisites
 
-	1. Clone the Repository
-```
-git clone <repository_link>
-cd medical_text_summarizer
-```
+- Docker & Docker Compose installed.
+- OpenAI API key (set in `.env` file).
+
+### Step-by-Step Setup
+
+#### 1. Clone the Repository
+```sh
+git clone https://github.com/anand-adroid/Medical-Text-Summarization-Prototype.git
+cd Medical-Text-Summarization-Prototype
+
 
 	2. Configure Environment Variables Create .env in backend directory:
 
