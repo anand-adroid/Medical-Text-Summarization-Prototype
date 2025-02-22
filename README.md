@@ -51,20 +51,78 @@ cd Medical-Text-Summarization-Prototype
 ```
 LLM_API_KEY=your_openai_api_key
 REDIS_URL=redis://redis:6379/0
+OCKER_REDIS_URL=redis://redis:6379/0
+CACHE_TTL=3600
+LOG_FILE=logs/summary.log
+BROWSER=chrome
+REACT_APP_API_URL=http://backend:8000
 
 ```
-#### 3. Start the Application with Docker
+
+### Docker Setup:
+
+# Docker Compose Override Configuration
+
+To configure environment variables, create a `docker-compose.override.yml` file. This file allows you to customize the default settings of your Docker Compose services without modifying the original `docker-compose.yml` file.
+
+---
+
+## Prerequisites
+
+- Docker installed on your machine.
+
+---
+
+## Step 1: Create `docker-compose.override.yml`
+
+Create a new file named `docker-compose.override.yml` in the same directory as your `docker-compose.yml` file.
+
+---
+
+## Step 2: Define Environment Variables
+
+In the `docker-compose.override.yml` file, define the environment variables under the `environment` section of the service. Below is an example configuration:
+
+```yaml
+version: '3.8'
+
+services:
+  backend:  
+    environment:
+      - LLM_API_KEY=your_api_key
+      - LLM_MODEL=gpt-4-turbo
+      - REDIS_URL=redis://127.0.0.1:6379/0
+      - DOCKER_REDIS_URL=redis://redis:6379/0
+      - CACHE_TTL=3600
+      - LOG_FILE=logs/summary.log
+
+  frontend:
+    environment:
+      - REACT_APP_API_URL=http://backend:8000 
+      - BROWSER=chrome
+```
+
+## Step 3: Apply the Override
+
+Run the following command to apply the override and start your Docker Compose services:
 
 ```
-docker-compose build
-docker-compose up
+docker-compose up --build -d --verbose
 ```
 
-#### 4. Access the Application  
-- **Frontend**: <a href="http://localhost:3000" target="_blank">http://localhost:3000</a>  
-- **Backend API Docs**: <a href="http://localhost:8000/docs" target="_blank">http://localhost:8000/docs</a>
+This command will start your services with the environment variables defined in the docker-compose.override.yml file.
 
-#### 5. Architecture Overview
+## Step 4: Verify Configuration
+
+To verify that the environment variables have been correctly applied, you can inspect the environment of the running container:
+
+```
+docker exec -it <container_id> printenv
+```
+Replace <container_id> with the actual container ID of your service.
+
+
+#### Architecture Overview
 
 ![Architecture Diagram](https://github.com/anand-adroid/Medical-Text-Summarization-Prototype/blob/564842a48fa954acd3dbb57c2be70744ba4ded4a/Architecture.png)
 
