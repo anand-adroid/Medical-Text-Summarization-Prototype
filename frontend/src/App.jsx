@@ -44,8 +44,8 @@ function App() {
       return;
     }
 
-  const medicalKeywords = ["patient", "diagnosis", "medication", "symptoms", "treatment", "hospital", "doctor", "disease"];
-  const containsMedicalTerm = medicalKeywords.some(term => notes.toLowerCase().includes(term));
+  const medicalRegex = /\b(patient|diagnosis|medication|symptoms|treatment|hospital|doctor|disease|clinic|prescription|therapy|surgery|procedure|injury|disorder|infection|x-ray|ultrasound|mri|ct scan|radiograph|contrast|nodule|lesion|calcification|edema|radiology|imaging|echo|fluoroscopy|density|opacity|angiography|scan|biopsy|histology|cytology|malignant|benign|neoplasm|tissue|carcinoma|metastasis|microscopic|specimen|tumor|ecg|ekg|arrhythmia|ischemia|angioplasty|hypertension|tachycardia|bradycardia|st-elevation|stenosis|valve|echo|stroke|tbi|hemorrhage|neural|seizure|dementia|neuropathy|brain|spinal cord|neurosurgery|cbc|wbc|rbc|platelets|creatinine|bilirubin|glucose|electrolytes|culture|lab test|pathology|chest|lung|liver|pancreas)\b/i;
+  const containsMedicalTerm = medicalRegex.test(notes);
 
   if (!containsMedicalTerm) {
     setError("The text does not seem to contain medical information. Please enter valid clinical notes.");
